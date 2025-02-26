@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SettingFragment"
+    android:id="@+id/SettingsFragment">
+
+    <TextView
+        android:id="@+id/pystota"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        android:textSize="16dp"
+        android:textColor="?attr/textColorPrimary"
+        android:background="?backgroundPrimaryColor"
+        />
+
+    <TextView
+        android:id="@+id/name_settings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="15dp"
+        android:textSize="16dp"
+        android:fontFamily="@font/sochi"
+        android:textColor="?attr/textColorPrimary"
+        android:background="?backgroundPrimaryColor"
+        android:layout_marginStart="90dp"
+        android:text="Настройки Мессенджера" />
+
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="#AAAAAA"
+        app:layout_constraintTop_toBottomOf="@+id/name_settings" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="←"
+        android:textColor="?attr/textColorPrimary"
+        android:textSize="23dp"
+        android:background="@drawable/button_back"
+        app:layout_constraintBottom_toBottomOf="@+id/name_settings"
+        app:layout_constraintTop_toTopOf="@+id/name_settings"
+        app:layout_constraintEnd_toStartOf="@+id/name_settings" />
+
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Войти в профиль"
+        android:textColor="?attr/textColorPrimary"
+        android:textSize="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_back"
+        app:layout_constraintTop_toBottomOf="@+id/name_settings"
+        />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_themes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textColor="?attr/textColorPrimary"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Переключение темы (White/Dark)"
+        android:background="?backgroundPrimaryColor"
+        app:layout_constraintTop_toBottomOf="@+id/button_register"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

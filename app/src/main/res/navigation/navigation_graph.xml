@@ -4,13 +4,13 @@
     android:id="@+id/navigation_graph"
     app:startDestination="@id/placeholder">
     <fragment android:id="@+id/placeholder" >
-    <action
-        android:id="@+id/action_placeholder_to_placeholder2"
-        app:destination="@id/placeholder2"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_placeholder_to_placeholder2"
+            app:destination="@id/placeholder2"
+            app:enterAnim="@anim/anim_out_left"
+            app:exitAnim="@anim/anim_in_right"
+            app:popEnterAnim="@anim/anim_in_left"
+            app:popExitAnim="@anim/anim_out_right" />
     </fragment>
 
     <fragment android:id="@+id/placeholder2" >

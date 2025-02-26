@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/messenger_graph"
+    app:startDestination="@id/chatsFragment">
+
+    <fragment
+        android:id="@+id/chatsFragment"
+        android:name="com.example.windows.ChatsFragment">
+        <action
+            android:id="@+id/action_chatsFragment_to_chatFragment"
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/anim_in_right"
+            app:exitAnim="@anim/anim_out_left"
+            app:popEnterAnim="@anim/anim_in_left"
+            app:popExitAnim="@anim/anim_out_right" />
+        <action
+            android:id="@+id/action_chatsFragment_to_chatFragment2"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_chatsFragment_to_contactsFragment3"
+            app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_chatsFragment_to_settingsFragment4"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.windows.ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatsFragment"
+            app:destination="@id/chatsFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.example.windows.ContactsFragment">
+        <action
+            android:id="@+id/action_contactsFragment_to_chatsFragment3"
+            app:destination="@id/chatsFragment" />
+        <action
+            android:id="@+id/action_contactsFragment_to_settingsFragment4"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.windows.SettingFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_chatsFragment"
+            app:destination="@id/chatsFragment" />
+    </fragment>
+</navigation>
