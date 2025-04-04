@@ -12,11 +12,44 @@
         android:id="@+id/pystota"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?backgroundPrimaryColor"
         android:padding="15dp"
+        android:textColor="?attr/textColorPrimary"
         android:textSize="16dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="51dp" />
+
+    <TextView
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:background="?backgroundPrimaryColor"
+        android:fontFamily="@font/sochi"
+        android:padding="15dp"
+        android:gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="300dp"
+        android:text="Профиль:"
+        android:textColor="?attr/textColorPrimary"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/nameProfile"
+        app:layout_constraintTop_toBottomOf="@id/name_settings" />
+
+    <TextView
+        android:id="@+id/nameProfile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Имя профиля"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/sochi"
         android:textColor="?attr/textColorPrimary"
         android:background="?backgroundPrimaryColor"
-        />
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="120dp"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile"
+        app:layout_constraintTop_toTopOf="@+id/profile" />
 
     <TextView
         android:id="@+id/name_settings"
@@ -36,9 +69,16 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-
         android:background="#AAAAAA"
         app:layout_constraintTop_toBottomOf="@+id/name_settings" />
+
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#AAAAAA"
+        app:layout_constraintTop_toBottomOf="@+id/profile" />
 
     <Button
         android:id="@+id/button_back"
@@ -56,14 +96,14 @@
         android:id="@+id/button_register"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Войти в профиль"
+        android:text="Выйти из профиля"
         android:textColor="?attr/textColorPrimary"
         android:textSize="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_back"
-        app:layout_constraintTop_toBottomOf="@+id/name_settings"
+        app:layout_constraintBottom_toBottomOf="@+id/pystota"
         />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -71,12 +111,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:textColor="?attr/textColorPrimary"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/sochi"
         android:text="Переключение темы (White/Dark)"
         android:background="?backgroundPrimaryColor"
-        app:layout_constraintTop_toBottomOf="@+id/button_register"
+        app:layout_constraintTop_toBottomOf="@+id/nameProfile"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
