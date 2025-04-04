@@ -1,4 +1,3 @@
 package com.example.windows.data.models
 
-class LoginRequest {
-}
+data class LoginRequest(val login: String, val password: String)

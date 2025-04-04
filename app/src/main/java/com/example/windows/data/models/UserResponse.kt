@@ -1,4 +1,3 @@
 package com.example.windows.data.models
 
-class UserResponse {
-}
+data class UserResponse(val id: String, val name: String)

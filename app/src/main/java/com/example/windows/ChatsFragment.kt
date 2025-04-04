@@ -1,13 +1,12 @@
 package com.example.windows
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.windows.databinding.FragmentChatsBinding
-import com.example.windows.databinding.FragmentMainBinding
 
 class ChatsFragment : Fragment() {
     private var _binding: FragmentChatsBinding? = null

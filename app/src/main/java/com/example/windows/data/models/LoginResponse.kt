@@ -1,4 +1,3 @@
 package com.example.windows.data.models
 
-class LoginResponse {
-}
+data class LoginResponse(val token: String)
