@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    >
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@id/delete"
+        android:layout_alignParentTop="true"
+        android:padding="7dp"
+        android:fontFamily="@font/sochi"
+        android:text="Имя пользователя"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:gravity="end|center"
+        android:paddingEnd="15dp"
+        android:fontFamily="@font/sochi"
+        android:text="Удалить"
+        android:textStyle="bold"
+        android:background="@drawable/button_back"
+        android:textSize="15sp"
+        android:textColor="?attr/textColorPrimary"
+        />
+
+    <View
+        android:id="@+id/viewInItemContact"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:fontFamily="@font/sochi"
+        android:layout_below="@id/userName" />
+
+    <TextView
+        android:id="@+id/userLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:fontFamily="@font/sochi"
+        android:textStyle="italic"
+        android:text="Логин"
+        android:textSize="16sp"
+        android:layout_below="@id/viewInItemContact" />
+
+</RelativeLayout>

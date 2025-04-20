@@ -12,11 +12,10 @@
         android:id="@+id/pystota"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        android:textSize="16dp"
-        android:textColor="?attr/textColorPrimary"
         android:background="?backgroundPrimaryColor"
-        />
+        android:padding="15dp"
+        android:textColor="?attr/textColorPrimary"
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/name_contacts"
@@ -30,7 +29,6 @@
         android:background="?backgroundPrimaryColor"
         android:layout_marginStart="90dp"
         android:text="Список контактов" />
-
 
     <TextView
         android:id="@+id/line"
@@ -52,7 +50,7 @@
         app:layout_constraintEnd_toStartOf="@+id/name_contacts" />
 
     <SearchView
-        android:id="@+id/Search"
+        android:id="@+id/SearchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:queryHint="Поиск контактов"
@@ -63,4 +61,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/set_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/SearchButton"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_contact" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/PlusContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/contacts_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="18dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/SearchContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#008CFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="90dp"
+        android:layout_marginEnd="18dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
