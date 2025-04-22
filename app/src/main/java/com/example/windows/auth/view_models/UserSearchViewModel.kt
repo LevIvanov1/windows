@@ -1,24 +1,66 @@
 package com.example.windows.auth.view_models
 
-import android.os.Bundle
-import android.view.LayoutInflater
+import android.content.Context
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.windows.data.ApiService
+import com.example.windows.data.models.UserSearchResponse
+import com.example.windows.libs.ContactRequest
+import com.example.windows.libs.DebounceOperators
+import com.example.windows.libs.HandleOperators
+import kotlinx.coroutines.launch
 
-//    class UserSearchViewModel(private val) : DialogFragment() {
-//        private lateinit var binding: DialogUserSearchBinding
-//
-//        class DialogUserSearchBinding {
-//
-//        }
-//
-//        override fun onCreateView(
-//            inflater: LayoutInflater,
-//            container: ViewGroup?,
-//            savedInstanceState: Bundle?
-//        ): View {
-//            binding = DialogUserSearchBinding.inflate(inflater, container, false)
-//            return binding.root
-//        }
-//    }
+class UserSearchViewModel(val apiService: ApiService, val context: Context, val view: View?): ViewModel() {
+    private val _userSearch = MutableLiveData<List<UserSearchResponse>>()
+    val userSearch: LiveData<List<UserSearchResponse>> get() = _userSearch
+
+    companion object {
+        fun getViewModelFactory(apiService: ApiService, context: Context, view: View?): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    UserSearchViewModel(
+                        apiService = apiService,
+                        context = context,
+                        view = view
+                    )
+                }
+            }}
+
+    val searchUser: (String)-> Unit = DebounceOperators.debounce(300L, viewModelScope,
+        this::onUserSearch)
+
+    fun onUserSearch(newText: String){
+        viewModelScope.launch {
+            val response = HandleOperators.handleRequest {
+                apiService.userSearch(newText)
+            }
+            when (response.code()) {
+                200 -> {
+                    _userSearch.value = response.body()
+                }
+                -1 -> {
+                }
+            }
+        }
+    }
+
+    fun addFriendRequest(userId: String) {
+        viewModelScope.launch {
+            val response = HandleOperators.handleRequest {
+                apiService.addContact(ContactRequest(userId))
+            }
+            when (response.code()) {
+                200 -> {
+                }
+                -1 -> {
+                }
+            }
+        }
+    }
+}

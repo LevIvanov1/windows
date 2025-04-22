@@ -1,4 +1,4 @@
-package com.example.windows.dialogs
+package com.example.windows.auth.utils
 
 import android.os.Bundle
 import android.view.LayoutInflater

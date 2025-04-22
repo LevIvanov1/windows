@@ -4,27 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.windows.data.RequestResponse
-import com.example.windows.databinding.ItemIncomingRequestBinding
+import com.example.windows.databinding.ItemOutgoingRequestBinding
 
-
-class IncomingRequestsAdapter(val accept: (RequestResponse) -> Unit, val decline: (RequestResponse) -> Unit): RecyclerView.Adapter<IncomingRequestsAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemIncomingRequestBinding) :
+class OutgoingRequestsAdapter(val decline: (RequestResponse) -> Unit): RecyclerView.Adapter<OutgoingRequestsAdapter.ViewHolder>()  {
+    inner class ViewHolder(val binding: ItemOutgoingRequestBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     private var requests = mutableListOf<RequestResponse>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomingRequestsAdapter.ViewHolder {
-        val binding = ItemIncomingRequestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutgoingRequestsAdapter.ViewHolder {
+        val binding = ItemOutgoingRequestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: IncomingRequestsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OutgoingRequestsAdapter.ViewHolder, position: Int) {
         with(holder.binding) {
             userName.text = requests[position].name
             userLogin.text = requests[position].login
-            accept.setOnClickListener {
-                accept(requests[position])
-            }
             decline.setOnClickListener {
                 decline(requests[position])
             }
