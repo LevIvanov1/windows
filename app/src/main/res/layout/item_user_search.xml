@@ -5,6 +5,23 @@
     android:layout_marginBottom="8dp"
     >
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/userAvatarCard"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_alignBottom="@id/userLogin"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/contacts_foreground"/>
+
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/userName"
         android:layout_width="match_parent"
@@ -14,6 +31,7 @@
         android:gravity="center_vertical"
         android:padding="8dp"
         android:text="Имя"
+        android:layout_toEndOf="@+id/userAvatarCard"
         android:fontFamily="@font/sochi"
         android:textFontWeight="1000"
         android:textSize="21sp" />
@@ -44,6 +62,7 @@
         android:layout_below="@id/viewInItemContact"
         android:padding="8dp"
         android:text="Логин"
+        android:layout_toEndOf="@+id/userAvatarCard"
         android:fontFamily="@font/sochi"
         android:textFontWeight="1"
         android:textSize="18sp" />
