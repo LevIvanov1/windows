@@ -44,7 +44,8 @@ class RequestsViewModel(val apiService: ApiService, val context: Context, val vi
                 200 -> {
                     _incomingRequests.value = response.body()
                 }
-                -1 -> {
+
+                999 -> {
                 }
             }
         }
@@ -59,7 +60,8 @@ class RequestsViewModel(val apiService: ApiService, val context: Context, val vi
                 200 -> {
                     _outgoingRequests.value = response.body()
                 }
-                -1 -> {
+
+                999 -> {
                 }
             }
         }
@@ -74,7 +76,8 @@ class RequestsViewModel(val apiService: ApiService, val context: Context, val vi
                 200 -> {
                     inRequestResponse()
                 }
-                -1 -> {
+
+                999 -> {
                 }
             }
         }
@@ -90,7 +93,8 @@ class RequestsViewModel(val apiService: ApiService, val context: Context, val vi
                     inRequestResponse()
                     outRequestResponse()
                 }
-                -1 -> {
+
+                999 -> {
                 }
             }
         }

@@ -5,10 +5,9 @@ import com.example.windows.data.models.LoginResponse
 import com.example.windows.data.models.RegisterRequest
 import com.example.windows.data.models.UserResponse
 import com.example.windows.data.models.UserSearchResponse
-import com.example.windows.libs.ContactRequest
-import com.example.windows.libs.UpdateNameRequest
+import com.example.windows.dialogs.ContactRequest
+import com.example.windows.dialogs.UpdateNameRequest
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,22 +18,23 @@ import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
+
     @POST("/auth/login")
-    fun login(@Body request: LoginRequest): Call<LoginResponse>
+    suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
     @POST("/auth/register")
-    fun register(@Body request: RegisterRequest): Call<LoginResponse>
+    suspend fun register(@Body request: RegisterRequest): Response<LoginResponse>
 
     @POST("/auth/logout")
-    fun logout(): Call<Unit>
+    suspend fun logout(): Response<Unit>
 
     @GET("/users/user")
     suspend fun getUser(): Response<UserResponse>
 
     @GET("/users/search")
-    suspend fun userSearch(@Query("search") search: String): Response<List<UserSearchResponse>>
+    suspend fun userSearch(@Query("search") search : String): Response<List<UserSearchResponse>>
 
-    @PATCH("/user/update/name")
+    @PATCH("/users/update/name")
     suspend fun userUpdateName(@Body request: UpdateNameRequest): Response<Unit>
 
     @GET("/contacts")
@@ -59,14 +59,6 @@ interface ApiService {
     suspend fun getContactsOutRequest(): Response<List<RequestResponse>>
 
     @Multipart
-    @PATCH("/user/avatar")
-    suspend fun updateUserAvatar(
-        @Part avatar: MultipartBody.Part
-    ): Response<Unit>
+    @PATCH("/users/update/avatar")
+    suspend fun updateAvatar(@Part file: MultipartBody.Part): Response<String>
 }
-
-   // @Multipart
-    //@PATCH("/users/update/avatar")
-    // suspend fun updateAvatar(@Part file: MultipartBody.Part): Response<String>
-
-

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.windows.auth.view_models.RequestsViewModel
 import com.example.windows.contacts.ui.adapters.IncomingRequestsAdapter
 import com.example.windows.data.RetrofitClient
+import kotlin.getValue
 import com.example.windows.databinding.FragmentContactsIncomingRequestsBinding
 
 class IncomingRequestsFragment : Fragment() {

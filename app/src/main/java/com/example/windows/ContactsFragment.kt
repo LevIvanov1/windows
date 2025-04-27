@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.windows.auth.utils.RequestsDialogFragment
 import com.example.windows.contacts.ui.adapters.ContactsAdapter
+import com.example.windows.contacts.ui.adapters.ContactsScreenState
 import com.example.windows.data.RetrofitClient
 import com.example.windows.databinding.FragmentContactsBinding
 import com.example.windows.dialogs.UserSearchDialogFragment
@@ -34,17 +36,15 @@ class ContactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.contacts.observe(viewLifecycleOwner) { contacts ->
+            render(contacts)
+        }
+
         contactsAdapter = ContactsAdapter(
             onClick = { contact -> viewModel.deleteContact(contact.id) }
         )
         binding.setContacts.adapter = contactsAdapter
-        viewModel.contacts.observe(viewLifecycleOwner) { contacts ->
-            contactsAdapter.setContacts(contacts)
-        }
 
-        contactsAdapter.filter.filter("")
-
-        viewModel.getContacts()
         binding.SearchButton.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?) = false
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -61,9 +61,38 @@ class ContactsFragment : Fragment() {
             RequestsDialogFragment().show(childFragmentManager, "ConfirmationDialog")
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun render(state: ContactsScreenState) {
+        when (state) {
+            is ContactsScreenState.Loading -> showLoading(state)
+            is ContactsScreenState.Content -> showContent(state)
+            is ContactsScreenState.Error -> showError(state)
+        }
+    }
+
+    private fun hideAll() {
+        binding.overlay.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.setContacts.isVisible = false
+    }
+
+    private fun showLoading(state: ContactsScreenState.Loading) {
+        hideAll()
+        binding.overlay.isVisible = true
+        binding.progressBar.isVisible = true
+    }
+
+    private fun showContent(state: ContactsScreenState.Content) {
+        hideAll()
+        binding.setContacts.isVisible = true
+        contactsAdapter.setContacts(state.contacts)
+    }
+
+    private fun showError(state: ContactsScreenState.Error) {
+        hideAll()
     }
 }

@@ -4,28 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.windows.R
+import com.example.windows.auth.view_models.AuthViewModel
 import com.example.windows.data.RetrofitClient
-import com.example.windows.data.models.LoginResponse
-import com.example.windows.data.models.RegisterRequest
-import com.example.windows.data.models.errors.AuthErrorBody422
+import com.example.windows.data.models.AuthScreenState
 import com.example.windows.databinding.RegisterFragmentBinding
-import com.example.windows.libs.TokenManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RegisterFragment : Fragment() {
     private var _binding: RegisterFragmentBinding? = null
     private val binding get() = _binding!!
+    private val apiService by lazy {
+        RetrofitClient.create(requireContext(), view)
+    }
+    private val viewModel by viewModels<AuthViewModel> {
+        AuthViewModel.getViewModelFactory(apiService, requireContext(), view)
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = RegisterFragmentBinding.inflate(inflater, container, false)
@@ -35,49 +37,60 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.authState.observe(viewLifecycleOwner) { authState ->
+            render(authState)
+        }
+
+        binding.buttonRegister.setOnClickListener{
+            viewModel.register(login = binding.inputLogin.text.toString(), password = binding.inputPassword.text.toString(), name = binding.inputName.text.toString(), context = requireContext())
+        }
+    }
+
+    private fun render(state: AuthScreenState) {
+        when (state) {
+            is AuthScreenState.Loading -> showLoading(state)
+            is AuthScreenState.Content -> showContent(state)
+            is AuthScreenState.Error -> showError(state)
+            is AuthScreenState.Navigate -> showNavigate(state)
+        }
+    }
+
+    private fun hideAll() {
         binding.errLogin.isVisible = false
         binding.errPassword.isVisible = false
         binding.errName.isVisible = false
+        setFragmentResult("request", bundleOf("result" to false))
+    }
 
-        binding.buttonRegister.setOnClickListener{
-            binding.errLogin.isVisible = false
-            binding.errPassword.isVisible = false
-            binding.errName.isVisible = false
-            RetrofitClient.create(requireContext(), view).register(RegisterRequest(binding.inputLogin.text.toString(), binding.inputPassword.text.toString(),
-                binding.inputName.text.toString())).enqueue(
-                object :
-                    Callback<LoginResponse> {
-                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                        if (response.isSuccessful) {
-                            response.body()?.token?.let { token ->
-                                TokenManager.saveToken(requireContext(), token)
-                                findNavController().navigate(R.id.action_authFragment_to_chatsFragment2)
-                            }
-                        } else if (response.code() == 422) {
-                            val gson = Gson()
-                            val type = object : TypeToken<AuthErrorBody422>() {}.type
-                            var errorResponse: AuthErrorBody422? = gson.fromJson(response.errorBody()!!.charStream(), type)
-                            if (errorResponse == null)
-                                return
+    private fun showLoading(state: AuthScreenState.Loading) {
+        hideAll()
+        setFragmentResult("request", bundleOf("result" to true))
+    }
 
-                            if (errorResponse.errors.Login != null) {
-                                binding.errLogin.text = errorResponse.errors.Login!!.first()
-                                binding.errLogin.isVisible = true
-                            }
-                            if (errorResponse.errors.Password != null) {
-                                binding.errPassword.text = errorResponse.errors.Password!!.first()
-                                binding.errPassword.isVisible = true
-                            }
-                            if (errorResponse.errors.Name != null) {
-                                binding.errName.text = errorResponse.errors.Name!!.first()
-                                binding.errName.isVisible = true
-                            }
-                        }
-                    }
+    private fun showContent(state: AuthScreenState.Content) {
+        hideAll()
+    }
 
-                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    }
-                })
+    private fun showError(state: AuthScreenState.Error) {
+        hideAll()
+
+        if (state.loginError != null){
+            binding.errLogin.isVisible = true
+            binding.errLogin.text = state.loginError
         }
+
+        if (state.passwordError != null){
+            binding.errPassword.isVisible = true
+            binding.errPassword.text = state.passwordError
+        }
+
+        if (state.nameError != null){
+            binding.errName.isVisible = true
+            binding.errName.text = state.nameError
+        }
+    }
+
+    private fun showNavigate(state: AuthScreenState){
+        findNavController().navigate(R.id.action_authFragment_to_chatsFragment2)
     }
 }

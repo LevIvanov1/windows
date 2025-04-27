@@ -11,12 +11,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.windows.data.ApiService
 import com.example.windows.data.models.UserSearchResponse
-import com.example.windows.libs.ContactRequest
+import com.example.windows.dialogs.ContactRequest
 import com.example.windows.libs.DebounceOperators
 import com.example.windows.libs.HandleOperators
 import kotlinx.coroutines.launch
 
-class UserSearchViewModel(val apiService: ApiService, val context: Context, val view: View?): ViewModel() {
+class UserSearchViewModel(val apiService: ApiService, val context: Context, val view: View?) : ViewModel() {
     private val _userSearch = MutableLiveData<List<UserSearchResponse>>()
     val userSearch: LiveData<List<UserSearchResponse>> get() = _userSearch
 
@@ -30,12 +30,15 @@ class UserSearchViewModel(val apiService: ApiService, val context: Context, val 
                         view = view
                     )
                 }
-            }}
+            }
+    }
 
-    val searchUser: (String)-> Unit = DebounceOperators.debounce(300L, viewModelScope,
-        this::onUserSearch)
+    val searchUser: (String) -> Unit = DebounceOperators.debounce(
+        300L, viewModelScope,
+        this::onUserSearch
+    )
 
-    fun onUserSearch(newText: String){
+    fun onUserSearch(newText: String) {
         viewModelScope.launch {
             val response = HandleOperators.handleRequest {
                 apiService.userSearch(newText)
@@ -44,7 +47,8 @@ class UserSearchViewModel(val apiService: ApiService, val context: Context, val 
                 200 -> {
                     _userSearch.value = response.body()
                 }
-                -1 -> {
+
+                999 -> {
                 }
             }
         }
@@ -58,7 +62,8 @@ class UserSearchViewModel(val apiService: ApiService, val context: Context, val 
             when (response.code()) {
                 200 -> {
                 }
-                -1 -> {
+
+                999 -> {
                 }
             }
         }

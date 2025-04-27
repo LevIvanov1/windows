@@ -9,11 +9,11 @@ import androidx.fragment.app.viewModels
 import com.example.windows.auth.view_models.RequestsViewModel
 import com.example.windows.contacts.ui.adapters.OutgoingRequestsAdapter
 import com.example.windows.data.RetrofitClient
-import com.example.windows.databinding.FragmentContactsIncomingRequestsBinding
+import com.example.windows.databinding.FragmentContactsOutgoingRequestsBinding
 
 
 class OutgoingRequestsFragment : Fragment() {
-    private var _binding: FragmentContactsIncomingRequestsBinding? = null
+    private var _binding: FragmentContactsOutgoingRequestsBinding? = null
     private val binding get() = _binding!!
     private lateinit var outgoingRequestsAdapter: OutgoingRequestsAdapter
     private val apiService by lazy {
@@ -27,7 +27,7 @@ class OutgoingRequestsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentContactsIncomingRequestsBinding.inflate(inflater, container, false)
+        _binding = FragmentContactsOutgoingRequestsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

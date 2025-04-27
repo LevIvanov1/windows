@@ -3,6 +3,8 @@ package com.example.windows.contacts.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.windows.R
 import com.example.windows.data.RequestResponse
 import com.example.windows.databinding.ItemIncomingRequestBinding
 
@@ -22,6 +24,7 @@ class IncomingRequestsAdapter(val accept: (RequestResponse) -> Unit, val decline
         with(holder.binding) {
             userName.text = requests[position].name
             userLogin.text = requests[position].login
+            Glide.with(holder.itemView).load(requests[position].avatar).placeholder(R.drawable.contacts_foreground).into(userAvatar)
             accept.setOnClickListener {
                 accept(requests[position])
             }

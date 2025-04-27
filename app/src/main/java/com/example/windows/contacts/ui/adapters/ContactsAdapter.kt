@@ -5,17 +5,18 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.windows.R
 import com.example.windows.data.ContactsResponse
-import com.example.windows.data.models.UserSearchResponse
 import com.example.windows.databinding.ItemContactBinding
 
-class ContactsAdapter(val onClick: (UserSearchResponse) -> Unit) : RecyclerView.Adapter<ContactsAdapter.ViewHolder> (),
+class ContactsAdapter(val onClick: (ContactsResponse) -> Unit) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>(),
     Filterable {
     inner class ViewHolder(val binding: ItemContactBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private var contacts = mutableListOf<ContactsResponse>()
-    private var filteredContacts = mutableListOf<ContactsResponse>()
+    private val contacts = mutableListOf<ContactsResponse>()
+    private val filteredContacts = mutableListOf<ContactsResponse>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,14 +27,18 @@ class ContactsAdapter(val onClick: (UserSearchResponse) -> Unit) : RecyclerView.
         with(holder.binding) {
             userName.text = filteredContacts[position].name
             userLogin.text = filteredContacts[position].login
+            Glide.with(holder.itemView).load(filteredContacts[position].avatar).placeholder(R.drawable.contacts_foreground).into(userAvatar)
             delete.setOnClickListener {
+                onClick(filteredContacts[position])
             }
         }
     }
 
     fun setContacts(newContacts: List<ContactsResponse>) {
-        contacts = newContacts.toMutableList()
-        filteredContacts = newContacts.toMutableList()
+        contacts.clear()
+        contacts.addAll(newContacts)
+        filteredContacts.clear()
+        filteredContacts.addAll(newContacts)
         notifyDataSetChanged()
     }
 
@@ -60,7 +65,10 @@ class ContactsAdapter(val onClick: (UserSearchResponse) -> Unit) : RecyclerView.
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            filteredContacts = results?.values as? MutableList<ContactsResponse> ?: mutableListOf()
+            filteredContacts.clear()
+            (results?.values as? List<ContactsResponse>)?.let {
+                filteredContacts.addAll(it)
+            }
             notifyDataSetChanged()
         }
     }

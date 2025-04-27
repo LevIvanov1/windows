@@ -34,6 +34,10 @@ class RequestsDialogFragment : DialogFragment() {
         }
 
         tabsMediator.attach()
+
+        binding.buttonBack.setOnClickListener{
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {

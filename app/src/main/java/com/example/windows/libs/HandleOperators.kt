@@ -11,7 +11,7 @@ object HandleOperators {
             try {
                 request.invoke()
             } catch (e: Exception) {
-                Response.error(-1, e.message?.toResponseBody() ?: "Network error".toResponseBody())
+                Response.error(999, e.message?.toResponseBody() ?: "Network error".toResponseBody())
             }
         }
     }

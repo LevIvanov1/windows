@@ -1,8 +1,10 @@
 package com.example.windows.contacts.ui.adapters
 
 import android.view.LayoutInflater
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.windows.R
 import com.example.windows.data.models.UserSearchResponse
 import com.example.windows.databinding.ItemUserSearchBinding
 
@@ -21,6 +23,7 @@ class UserSearchAdapter(private val onClick: (UserSearchResponse) -> Unit) : Rec
         with(holder.binding) {
             userName.text = contacts[position].name
             userLogin.text = contacts[position].login
+            Glide.with(holder.itemView).load(contacts[position].avatar).placeholder(R.drawable.contacts_foreground).into(userAvatar)
             add.setOnClickListener {
                 onClick(contacts[position])
             }
